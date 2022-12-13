@@ -40,8 +40,6 @@ const middleware_rentals = {
         {
             const query = await repository.getRentalById(id);
             
-            console.log(query);
-
             if(query.return_date) return res.sendStatus(400);
         }
         
