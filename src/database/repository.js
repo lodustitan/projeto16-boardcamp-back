@@ -38,13 +38,14 @@ class Repository
     }
     async addGame(name, image, stockTotal, categoryId, pricePerDay)
     {
+
         try 
         {
             const query = await connection.query(`
                 INSERT INTO games
-                    (id, name, image, stockTotal, categoryId, pricePerDay)
+                    (name, image, stock_total, category_id, price_per_day)
                 VALUES
-                    ($1, $2, $3, $4, $5, $6);`, [id, name, image, stockTotal, categoryId, pricePerDay]);
+                    ($1, $2, $3, $4, $5);`, [name, image, stockTotal, categoryId, pricePerDay]);
             return query.rows;
         }
         catch (err) 
@@ -151,17 +152,17 @@ class Repository
         {
             const query = await connection.query(`
                 SELECT 
-                    r.id, r.customerId, r.gameId, r.rentDate, r.daysRented, r.returnDate, r.originalPrice, r.delayFee,
+                    r.id, r.customer_id, r.game_id, r.rent_date, r.days_rented, r.return_date, r.original_price, r.delay_fee,
                     customer.id, customer.name,
-                    game.id, game.name, game.categoryId, game.categoryName
+                    game.id, game.name, game.category_id, game.category_name
                 FROM
                     rentals AS r
                 JOIN
                     customers AS customer
-                    ON rentals.customerId = customers.id
+                    ON rentals.customer_id = customers.id
                 JOIN
                     games AS game
-                    ON rentals.gameId = games.id;`);
+                    ON rentals.game_id = games.id;`);
             return query.rows;
         }
         catch (err) 
@@ -181,7 +182,7 @@ class Repository
         {
             await connection.query(`
                 INSERT INTO rentals
-                    (customerId, gameId, daysRented, rentDate, originalPrice, daysRented)
+                    (customer_id, game_id, days_rented, rent_date, original_price, days_rented)
                 VALUES
                     ($1, $2, $3, $4, $5, $6);`, [customerId, gameId, daysRented, rentDate, originalPrice]);
             return true;
@@ -196,7 +197,7 @@ class Repository
     {
         const 
             returnDate = new Date().toLocaleDateString("pt-BR"),
-            rentDate = await connection.query(`SELECT rentDate FROM rentals WHERE id=$1`, [1]).rows[0].rentDate, 
+            rentDate = await connection.query(`SELECT rent_date FROM rentals WHERE id=$1`, [1]).rows[0].rentDate, 
             delayFee = returnDate - rentDate;
         try 
         {
@@ -204,8 +205,8 @@ class Repository
                 UPDATE
                     rentals 
                 SET
-                    returnDate = $2,
-                    delayFee = $3
+                    return_date = $2,
+                    delay_fee = $3
                 WHERE
                     id=$1;`, [id, returnDate, delayFee]);    
         } 

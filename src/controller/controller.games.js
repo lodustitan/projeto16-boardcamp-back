@@ -13,7 +13,10 @@ const controller_games = {
 
         try
         {
-            await repository.addGame(data.name, data.image, data.stockTotal, data.categoryId, data.pricePerDay);
+            const query = await repository.addGame(data.name, data.image, data.stockTotal, data.categoryId, data.pricePerDay);
+            
+            if(!query) throw Error("query error");
+
             return res.status(200).send("Jogo adicionado.");
         }
         catch(err)

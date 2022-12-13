@@ -13,9 +13,13 @@ const controller_categories = {
 
         try 
         {
-            await repository.addCategory(data.name);
+            const query = await repository.addCategory(data.name);
+
+            if(!query) throw Error("query error")
+
             return res.status(200).send("Categoria adicionada.");
-        } catch (err) 
+        } 
+        catch (err) 
         {
             console.error(err);
             return res.sendStatus(404);

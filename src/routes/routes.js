@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import controllers from "../controller/_index.js";
-import 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 from "../middleware/_index.js";
+import middlewares from "../middleware/_index.js";
 
 const route = Router();
 
