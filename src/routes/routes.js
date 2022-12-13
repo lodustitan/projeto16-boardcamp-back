@@ -5,6 +5,7 @@ import middlewares from "../middleware/_index.js";
 
 const route = Router();
 
+//* Routes
 route.get("/categories", controllers.categories.listCategories);
 route.post("/categories", middlewares.categories.insertCategory, controllers.categories.insertCategory);
 
