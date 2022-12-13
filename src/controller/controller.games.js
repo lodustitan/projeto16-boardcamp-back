@@ -9,7 +9,18 @@ const controller_games = {
     },
     insertGame: async (req, res) => 
     {
-        
+        const { data } = res.locals;
+
+        try
+        {
+            await repository.addGame(data.name, data.image, data.stockTotal, data.categoryId, data.pricePerDay);
+            return res.status(200).send("Jogo adicionado.");
+        }
+        catch(err)
+        {
+            console.error(err);
+            return res.sendStatus(404);
+        }
     }
 };
 

@@ -36,7 +36,7 @@ class Repository
             return false;
         }
     }
-    async addGame(id, name, image, stockTotal, categoryId, pricePerDay)
+    async addGame(name, image, stockTotal, categoryId, pricePerDay)
     {
         try 
         {

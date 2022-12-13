@@ -5,7 +5,7 @@ import Schemas from "../schema/schemas.js";
 const middleware_games = {
     insertGame: async (req, res, next) => 
     {
-        const model = Schemas.insertCategory.validate(req.body);
+        const model = Schemas.insertGame.validate(req.body);
 
         if(model.error)
             return res.sendStatus(400);

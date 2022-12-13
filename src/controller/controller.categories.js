@@ -11,9 +11,15 @@ const controller_categories = {
     {
         const { data } = res.locals;
 
-        await repository.addCategory(data.name);
-
-        return res.status(200).send("Categoria adicionada.");
+        try 
+        {
+            await repository.addCategory(data.name);
+            return res.status(200).send("Categoria adicionada.");
+        } catch (err) 
+        {
+            console.error(err);
+            return res.sendStatus(404);
+        }
     }
 };
 
