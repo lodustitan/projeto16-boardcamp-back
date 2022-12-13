@@ -107,7 +107,7 @@ class Repository
             return false;
         } 
     }
-    async addCustomers(name, phone, cpf, birthday)
+    async addCustomer(name, phone, cpf, birthday)
     {
         try 
         {
@@ -124,7 +124,7 @@ class Repository
             return false;
         } 
     }
-    async updateCustomers(name, phone, cpf, birthday)
+    async updateCustomer(id, name, phone, cpf, birthday)
     {
         try 
         {
@@ -132,12 +132,12 @@ class Repository
                 UPDATE 
                     customers
                 SET
-                    name = $1, 
-                    phone = $2, 
-                    cpf = $3, 
-                    birthday = $4
+                    name = $2, 
+                    phone = $3, 
+                    cpf = $4, 
+                    birthday = $5
                 WHERE
-                    ($1, $2, $3, $4);`, [name, phone, cpf, birthday]);
+                    id=$1;`, [id, name, phone, cpf, birthday]);
             return true;
         }
         catch (err) 

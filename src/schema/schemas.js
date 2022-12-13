@@ -1,4 +1,7 @@
-import Joi from "joi";
+import BaseJoi from 'joi';
+import JoiDate from '@joi/date';
+
+const Joi = BaseJoi.extend(JoiDate);
 
 const Schemas = {};
 
@@ -11,8 +14,23 @@ Schemas.insertGame = Joi.object({
     stockTotal: Joi.number().required(), 
     categoryId: Joi.number().required(), 
     pricePerDay: Joi.number().required()
+});
+Schemas.findCustomerById = Joi.object({
+    name: Joi.number().required()
+});
+Schemas.insertCustomer = Joi.object({
+    name: Joi.string().min(2).required(), 
+    phone: Joi.string().regex(/^[0-9]{10,11}$/).messages({'string.pattern.base': `Phone number must have 10-11 digits.`}).required(), 
+    cpf: Joi.string().regex(/^[0-9]{10}$/).messages({'string.pattern.base': `CPF number must have 11 digits.`}).required(), 
+    birthday: Joi.date().format('YYYY-MM-DD').utc()
+});
+Schemas.updateCustomer = Joi.object({
+    id: Joi.number().required(),
+    name: Joi.string().min(2).required(), 
+    phone: Joi.string().regex(/^[0-9]{10,11}$/).messages({'string.pattern.base': `Phone number must have 10-11 digits.`}).required(), 
+    cpf: Joi.string().regex(/^[0-9]{10}$/).messages({'string.pattern.base': `CPF number must have 11 digits.`}).required(), 
+    birthday: Joi.date().format('YYYY-MM-DD').utc()
 })
-
 
 Schemas.categories = Joi.object({
     id: Joi.number().required(),

@@ -12,10 +12,10 @@ route.post("/categories", middlewares.categories.insertCategory, controllers.cat
 route.get("/games", controllers.games.listGames);
 route.post("/games", middlewares.games.insertGame, controllers.games.insertGame);
 
-route.get("/customers");
-route.get("/customers/:id");
-route.post("/customers");
-route.put("/customers/:id");
+route.get("/customers", controllers.customers.listCustomers);
+route.get("/customers/:id", middlewares.customers.findCustomerById, controllers.customers.findCustomerById);
+route.post("/customers", middlewares.customers.insertCustomer, controllers.customers.insertCustomer);
+route.put("/customers/:id", middlewares.customers.updateCustomer, controllers.customers.updateCustomer);
 
 route.get("/rentals");
 route.post("/rentals");
