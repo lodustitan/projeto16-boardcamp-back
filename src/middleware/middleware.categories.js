@@ -4,11 +4,13 @@ import repository from "../database/repository.js";
 const middleware_categories = {
     insertCategory: async (req, res, next) => 
     {
-        const model = Schemas.insertCategory.validate(req.body);
+        const { name } = req.body;
+        const model = Schemas.insertCategory.validate(req.body, {abortEarly: false});
 
         if(model.error)
         {
-            return res.sendStatus(400);
+            const details = model.error.details.map(detail => detail.message);
+            return res.status(400).send(details);
         }
         else
         {

@@ -5,10 +5,13 @@ import Schemas from "../schema/schemas.js";
 const middleware_games = {
     insertGame: async (req, res, next) => 
     {
-        const model = Schemas.insertGame.validate(req.body);
+        const model = Schemas.insertGame.validate(req.body, {abortEarly: false});
 
         if(model.error)
-            return res.sendStatus(400);
+        {
+            const details = model.error.details.map(detail => detail.message);
+            return res.status(400).send(details);
+        }
         else
         {
             const games = await repository.getGames();

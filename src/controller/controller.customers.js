@@ -22,7 +22,7 @@ const controller_customers = {
         catch (err) 
         {
             console.error(err);
-            return res.sendStatus(404);
+            return res.sendStatus(500);
 
         }
     },
@@ -41,7 +41,7 @@ const controller_customers = {
         catch (err) 
         {
             console.error(err);
-            return res.sendStatus(404);
+            return res.sendStatus(500);
         }
     },
     updateCustomer: async(req, res) => 
@@ -50,7 +50,7 @@ const controller_customers = {
 
         try 
         {
-            const query = await repository.updateCustomer(data.id, data.name, data.phhone, data.cpf, data.birthday);
+            const query = await repository.updateCustomer(data.id, data.name, data.phone, data.cpf, data.birthday);
             
             if(!query) throw Error("query error");
 
@@ -59,7 +59,7 @@ const controller_customers = {
         catch (err) 
         {
             console.error(err);
-            return res.sendStatus(404); 
+            return res.sendStatus(500); 
         }
 
     }

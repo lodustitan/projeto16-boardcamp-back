@@ -22,7 +22,7 @@ const controller_games = {
         catch(err)
         {
             console.error(err);
-            return res.sendStatus(404);
+            return res.sendStatus(500);
         }
     }
 };

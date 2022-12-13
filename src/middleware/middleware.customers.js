@@ -4,11 +4,11 @@ import Schemas from "../schema/schemas.js";
 const middleware_customers = {
     findCustomerById: async (req, res, next) => 
     {
-        const model = Schemas.findCustomerById.validate(req.params);
+        const model = Schemas.findCustomerById.validate(req.params, {abortEarly: false});
 
         if(model.error)
         {
-            const details = model.error.details.map(detail => detail);
+            const details = model.error.details.map(detail => detail.message);
             return res.status(400).send(details);
         }
 
@@ -18,11 +18,15 @@ const middleware_customers = {
     },
     insertCustomer: async (req, res, next) => 
     {
-        const model = Schemas.insertCustomer.validate(req.body);
+        let { name, phone, cpf, birthday } = req.body;
+
+        birthday = new Date(birthday).toLocaleDateString("pt-BR");
+
+        const model = Schemas.insertCustomer.validate({ name, phone, cpf, birthday }, {abortEarly: false});
 
         if(model.error)
         {
-            const details = model.error.details.map(detail => detail);
+            const details = model.error.details.map(detail => detail.message);
             return res.status(400).send(details);
         }
         else
@@ -42,13 +46,15 @@ const middleware_customers = {
     updateCustomer: async (req, res, next) => 
     {
         const { id } = req.params;
-        const { name, phone, cpf, birthday } = req.body;
+        let { name, phone, cpf, birthday } = req.body;
 
-        const model = Schemas.updateCustomer.validate({ id, name, phone, cpf, birthday });
+        birthday = new Date(birthday).toLocaleDateString("pt-BR");
+
+        const model = Schemas.updateCustomer.validate({ id, name, phone, cpf, birthday }, {abortEarly: false});
 
         if(model.error)
         {
-            const details = model.error.details.map(detail => detail);
+            const details = model.error.details.map(detail => detail.message);
             return res.status(400).send(details);
         }
 
