@@ -26,7 +26,7 @@ const middleware_rentals = {
         res.locals.data = req.body;
         next();
     },
-    finishRental: (req, res, next) => 
+    finishRental: async (req, res, next) => 
     {
         const { id } = req.params;
         const model = Schemas.finishRental.validate({id}, {abortEarly: false});
@@ -36,6 +36,15 @@ const middleware_rentals = {
             const details = model.error.details.map(detail => detail.message);
             return res.status(400).send(details);
         }
+        else
+        {
+            const query = await repository.getRentalById(id);
+            
+            console.log(query);
+
+            if(query.return_date) return res.sendStatus(400);
+        }
+        
 
         res.locals.data = { id };
         next();

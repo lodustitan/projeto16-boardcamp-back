@@ -245,7 +245,6 @@ class Repository
                     }
                 }
             }); 
-            console.log(query);
 
             return query;
         }
